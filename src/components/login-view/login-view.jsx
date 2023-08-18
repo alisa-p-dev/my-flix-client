@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-export const LoginView = () => {
+export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = (event) => {
@@ -12,9 +12,18 @@ export const LoginView = () => {
       secret: password,
     };
 
-    fetch("https://my-flix-api-esd8.onrender.com/login/", {
-      method: "POST",
-      body: JSON.stringify(data),
+    fetch(
+      `https://my-flix-api-esd8.onrender.com/login/?Username=${username}&Password=${password}`,
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+      }
+    ).then((response) => {
+      if (response.ok) {
+        onLoggedIn(username);
+      } else {
+        alert("Login failed");
+      }
     });
   };
 
