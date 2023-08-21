@@ -7,11 +7,43 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const data = {
+    Username: username,
+    Password: password,
+  };
+  const apiURL = "https://my-flix-api-esd8.onrender.com";
+
+  fetch(`${apiURL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Login response: ", data);
+      if (data.user) {
+        onLoggedIn(data.user, data.token);
+      } else {
+        alert("No such user");
+      }
+    })
+    .catch((e) => {
+      alert("Something went wrong");
+    });
 
   useEffect(() => {
-    fetch("https://my-flix-api-esd8.onrender.com/movies")
+    if (!token) {
+      return;
+    }
+    fetch(`${apiURL}/movies`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         const moviesFromApi = data.map((movie) => {
           return {
             _id: movie.id,
@@ -28,10 +60,17 @@ export const MainView = () => {
         });
         setMovies(moviesFromApi);
       });
-  }, []);
+  }, [token]);
 
   if (!user) {
-    return <LoginView onLoggedIn={(user) => setUser(user)} />;
+    return (
+      <LoginView
+        onLoggedIn={(user, token) => {
+          setUser(user);
+          setToken(token);
+        }}
+      />
+    );
   }
 
   if (selectedMovie) {
@@ -61,6 +100,7 @@ export const MainView = () => {
       <button
         onClick={() => {
           setUser(null);
+          setToken(null);
         }}
       >
         Logout
