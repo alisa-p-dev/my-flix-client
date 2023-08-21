@@ -8,31 +8,8 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  const data = {
-    Username: username,
-    Password: password,
-  };
-  const apiURL = "https://my-flix-api-esd8.onrender.com";
 
-  fetch(`${apiURL}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Login response: ", data);
-      if (data.user) {
-        onLoggedIn(data.user, data.token);
-      } else {
-        alert("No such user");
-      }
-    })
-    .catch((e) => {
-      alert("Something went wrong");
-    });
+  const apiURL = "https://my-flix-api-esd8.onrender.com";
 
   useEffect(() => {
     if (!token) {
