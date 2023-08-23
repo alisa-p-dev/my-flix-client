@@ -1,11 +1,12 @@
 import "./movie-view.scss";
 import PropTypes from "prop-types";
+import { Button, Card } from "react-bootstrap";
 
 export const MovieView = ({ movie, onBackClick }) => {
   return (
-    <div>
+    <Card>
       <div>
-        <img src={movie.ImagePath} />
+        <Card.Img className="h-100" src={movie.ImagePath} />
       </div>
       <div>
         <span>Title: </span>
@@ -23,10 +24,10 @@ export const MovieView = ({ movie, onBackClick }) => {
         <span>Directior: </span>
         <span>{movie.Director.Name}</span>
       </div>
-      <button onClick={onBackClick} className="back-button">
+      <Button onClick={onBackClick} className="back-button">
         Back
-      </button>
-    </div>
+      </Button>
+    </Card>
   );
 };
 
