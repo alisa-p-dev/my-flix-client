@@ -74,7 +74,9 @@ export const SignupView = () => {
           required
         />
       </Form.Group>
-      <Button type="submit">Register</Button>
+      <Button className="mt-3" type="submit">
+        Register
+      </Button>
     </Form>
   );
 };

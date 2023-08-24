@@ -1,37 +1,37 @@
-import "./movie-view.scss";
 import PropTypes from "prop-types";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Col, Row } from "react-bootstrap";
 
 export const MovieView = ({ movie, onBackClick }) => {
   return (
-    <Card>
-      <div>
-        <Card.Img className="h-100" src={movie.ImagePath} />
+    <Card className="border-0">
+      <Row>
+        <Col md={4}>
+          <Card.Img src={movie.ImagePath} />
+        </Col>
+        <Col md={8}>
+          <Card.Body>
+            <Card.Title>{movie.Title}</Card.Title>
+            <Card.Text>{movie.Description}</Card.Text>
+            <div>
+              <strong>Genre: </strong>
+              {movie.Genre.Name}
+            </div>
+            <div>
+              <strong>Director: </strong>
+              {movie.Director.Name}
+            </div>
+          </Card.Body>
+        </Col>
+      </Row>
+      <div className="d-flex justify-content-end">
+        <Button onClick={onBackClick} variant="link">
+          &lt;&lt;Back
+        </Button>
       </div>
-      <div>
-        <span>Title: </span>
-        <span>{movie.Title}</span>
-      </div>
-      <div>
-        <div>
-          <span>Description: </span>
-          <span>{movie.Description}</span>
-        </div>
-        <div>
-          <span>Genre: </span>
-          <span>{movie.Genre.Name}</span>
-        </div>
-        <span>Directior: </span>
-        <span>{movie.Director.Name}</span>
-      </div>
-      <Button onClick={onBackClick} className="back-button">
-        Back
-      </Button>
     </Card>
   );
 };
 
-//PropType conditions for moviesFromAPI variable return statement in main-view.jsx
 MovieView.propTypes = {
   movie: PropTypes.shape({
     ImagePath: PropTypes.string.isRequired,

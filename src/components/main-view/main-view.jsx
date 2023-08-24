@@ -3,7 +3,7 @@ import { MovieCard } from "../movie-card/movie-card.jsx";
 import { MovieView } from "../movie-view/movie-view.jsx";
 import { LoginView } from "../login-view/login-view.jsx";
 import { SignupView } from "../signup-view/signup-view.jsx";
-import { Button, Row, Col } from "react-bootstrap";
+import { Button, Row, Col, Navbar, Container, Nav } from "react-bootstrap";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -45,9 +45,30 @@ export const MainView = () => {
 
   return (
     <Row className="justify-content-md-center">
+      {user && (
+        <Navbar expand="lg" className="bg-custom">
+          <Container>
+            <Navbar.Brand href="#"></Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="ms-auto">
+                <Button
+                  onClick={() => {
+                    setUser(null);
+                    setToken(null);
+                    localStorage.clear();
+                  }}
+                >
+                  Logout
+                </Button>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+      )}
       {!user ? (
         <>
-          <Col md={6}>
+          <Col md={6} className="mb-5">
             <LoginView
               onLoggedIn={(user, token) => {
                 setUser(user);
@@ -59,9 +80,8 @@ export const MainView = () => {
           </Col>
         </>
       ) : selectedMovie ? (
-        <Col md={8} style={{ border: "1px solid black" }}>
+        <Col md={8}>
           <MovieView
-            style={{ border: "1px solid blue" }}
             movie={selectedMovie}
             onBackClick={() => setSelectedMovie(null)}
           />
@@ -71,7 +91,7 @@ export const MainView = () => {
       ) : (
         <>
           {movies.map((movie) => (
-            <Col className="mb-5" key={movie._id} md={3}>
+            <Col className="m-2" key={movie._id} md={3}>
               <MovieCard
                 movie={movie}
                 onMovieClick={(newSelectedMovie) => {
@@ -82,67 +102,6 @@ export const MainView = () => {
           ))}
         </>
       )}
-      <Button
-        onClick={() => {
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-        }}
-      >
-        Logout
-      </Button>
     </Row>
   );
-
-  // if (!user) {
-  //   return (
-
-  //     <>
-  //       <LoginView
-  //         onLoggedIn={(user, token) => {
-  //           setUser(user);
-  //           setToken(token);
-  //         }}
-  //       />
-  //       or
-  //       <SignupView />
-  //     </>
-  //   );
-  // }
-
-  // if (selectedMovie) {
-  //   return (
-  //     <MovieView
-  //       movie={selectedMovie}
-  //       onBackClick={() => setSelectedMovie(null)}
-  //     />
-  //   );
-  // }
-
-  // if (movies.length === 0) {
-  //   return <div>The list is empty!</div>;
-  // }
-
-  // return (
-  //   <div>
-  //     {movies.map((movie) => (
-  //       <MovieCard
-  //         key={movie.Title}
-  //         movie={movie}
-  //         onMovieClick={(newSelectedMovie) => {
-  //           setSelectedMovie(newSelectedMovie);
-  //         }}
-  //       />
-  //     ))}
-  //     <button
-  //       onClick={() => {
-  //         setUser(null);
-  //         setToken(null);
-  //         localStorage.clear();
-  //       }}
-  //     >
-  //       Logout
-  //     </button>
-  //   </div>
-  // );
 };
