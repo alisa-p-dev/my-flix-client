@@ -1,7 +1,12 @@
 import PropTypes from "prop-types";
 import { Button, Card, Col, Row } from "react-bootstrap";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movies }) => {
+  const { movieId } = useParams();
+
+  const movie = movies.find((b) => b._id === movieId);
   return (
     <Card className="border-0">
       <Row>
@@ -24,16 +29,18 @@ export const MovieView = ({ movie, onBackClick }) => {
         </Col>
       </Row>
       <div className="d-flex justify-content-end">
-        <Button onClick={onBackClick} variant="link">
-          &lt;&lt;Back
-        </Button>
+        <Link to={`/`}>
+          <Button className="back-button" variant="link">
+            &lt;&lt;Back
+          </Button>
+        </Link>
       </div>
     </Card>
   );
 };
 
 MovieView.propTypes = {
-  movie: PropTypes.shape({
+  movies: PropTypes.shape({
     ImagePath: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
     Genre: PropTypes.shape({
@@ -44,5 +51,4 @@ MovieView.propTypes = {
       Name: PropTypes.string.isRequired,
     }),
   }).isRequired,
-  onBackClick: PropTypes.func.isRequired,
 };
