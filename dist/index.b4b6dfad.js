@@ -27196,7 +27196,6 @@ const MainView = ()=>{
     const [user, setUser] = (0, _react.useState)(storedUser ? storedUser : null);
     const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
     const [movies, setMovies] = (0, _react.useState)([]);
-    const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     const apiURL = "https://my-flix-api-esd8.onrender.com";
     (0, _react.useEffect)(()=>{
         if (!token) return;
@@ -27206,17 +27205,17 @@ const MainView = ()=>{
             }
         }).then((response)=>response.json()).then((data)=>{
             console.log(data);
-            const moviesFromApi = data.map((movie1)=>{
+            const moviesFromApi = data.map((movie)=>{
                 return {
-                    _id: movie1.id,
-                    Title: movie1.Title,
-                    ImagePath: movie1.ImagePath,
-                    Description: movie1.Description,
+                    _id: movie.id,
+                    Title: movie.Title,
+                    ImagePath: movie.ImagePath,
+                    Description: movie.Description,
                     Genre: {
-                        Name: movie1.Genre.Name
+                        Name: movie.Genre.Name
                     },
                     Director: {
-                        Name: movie1.Director.Name
+                        Name: movie.Director.Name
                     }
                 };
             });
@@ -27225,9 +27224,6 @@ const MainView = ()=>{
     }, [
         token
     ]);
-    const handleMovieClick = (movie1)=>{
-        setSelectedMovie(movie1);
-    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.BrowserRouter), {
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navigationBarJsx.NavigationBar), {
             user: user,
@@ -27270,13 +27266,10 @@ const MainView = ()=>{
                                         children: "The list is empty!"
                                     }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                                         md: 8,
-                                        children: [
-                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {
-                                                movies: movies
-                                            }, void 0, false, void 0, void 0),
-                                            handleMovieClick(movie)
-                                        ]
-                                    }, void 0, true, void 0, void 0)
+                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {
+                                            movies: movies
+                                        }, void 0, false, void 0, void 0)
+                                    }, void 0, false, void 0, void 0)
                                 }, void 0, false)
                             }, void 0, false, void 0, void 0),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27302,21 +27295,17 @@ const MainView = ()=>{
                                             path: "/",
                                             element: selectedMovie ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                                                 md: 8,
-                                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {
-                                                    movie: selectedMovie,
-                                                    onBackClick: ()=>setSelectedMovie(null)
-                                                }, void 0, false, void 0, void 0)
+                                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {}, void 0, false, void 0, void 0)
                                             }, void 0, false, void 0, void 0) : movies.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                                 children: "The list is empty!"
                                             }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-                                                children: movies.map((movie1)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                                                children: movies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
                                                         className: "m-2",
                                                         md: 3,
                                                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
-                                                            movie: movie1,
-                                                            onMovieClick: handleMovieClick
+                                                            movie: movie
                                                         }, void 0, false, void 0, void 0)
-                                                    }, movie1._id, false, void 0, void 0))
+                                                    }, movie._id, false, void 0, void 0))
                                             }, void 0, false)
                                         }, void 0, false, void 0, void 0)
                                     }, void 0, false, void 0, void 0)
@@ -27328,16 +27317,16 @@ const MainView = ()=>{
             }
         }, void 0, false, {
             fileName: "src/components/main-view/main-view.jsx",
-            lineNumber: 54,
+            lineNumber: 49,
             columnNumber: 7
         }, undefined)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 53,
+        lineNumber: 48,
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "9wJBvfUyU2IigbyWC+M5y3EH9h4=");
+_s(MainView, "vrQobkEX5jhNcI69dtstaSSmWyg=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");

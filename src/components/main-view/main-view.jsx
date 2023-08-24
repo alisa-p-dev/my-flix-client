@@ -13,7 +13,6 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
 
   const apiURL = "https://my-flix-api-esd8.onrender.com";
 
@@ -44,10 +43,6 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, [token]);
-
-  const handleMovieClick = (movie) => {
-    setSelectedMovie(movie);
-  };
 
   return (
     <BrowserRouter>
@@ -95,7 +90,6 @@ export const MainView = () => {
                     ) : (
                       <Col md={8}>
                         <MovieView movies={movies} />
-                        {handleMovieClick(movie)}
                       </Col>
                     )}
                   </>
@@ -125,10 +119,7 @@ export const MainView = () => {
                           element={
                             selectedMovie ? (
                               <Col md={8}>
-                                <MovieView
-                                  movie={selectedMovie}
-                                  onBackClick={() => setSelectedMovie(null)}
-                                />
+                                <MovieView />
                               </Col>
                             ) : movies.length === 0 ? (
                               <div>The list is empty!</div>
@@ -136,10 +127,7 @@ export const MainView = () => {
                               <>
                                 {movies.map((movie) => (
                                   <Col className="m-2" key={movie._id} md={3}>
-                                    <MovieCard
-                                      movie={movie}
-                                      onMovieClick={handleMovieClick}
-                                    />
+                                    <MovieCard movie={movie} />
                                   </Col>
                                 ))}
                               </>
