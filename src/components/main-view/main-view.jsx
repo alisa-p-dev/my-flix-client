@@ -44,7 +44,7 @@ export const MainView = () => {
   }, [token]);
 
   return (
-    <Row className="justify-content-md-center">
+    <Row className="justify-content-md-center font-monospace">
       {user && (
         <Navbar expand="lg" className="bg-custom">
           <Container>

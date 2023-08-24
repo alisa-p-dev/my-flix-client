@@ -27224,7 +27224,7 @@ const MainView = ()=>{
         token
     ]);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Row), {
-        className: "justify-content-md-center",
+        className: "justify-content-md-center font-monospace",
         children: [
             user && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Navbar), {
                 expand: "lg",
