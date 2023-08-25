@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export const MovieView = ({ movies }) => {
   const { movieId } = useParams();
 
-  const movie = movies.find((b) => b._id === movieId);
+  const movie = movies.find((m) => m._id === movieId);
   return (
     <Card className="border-0">
       <Row>
@@ -30,7 +30,7 @@ export const MovieView = ({ movies }) => {
       </Row>
       <div className="d-flex justify-content-end">
         <Link to={`/`}>
-          <Button className="back-button" variant="link">
+          <Button variant="link" className="back-button">
             &lt;&lt;Back
           </Button>
         </Link>
@@ -40,7 +40,7 @@ export const MovieView = ({ movies }) => {
 };
 
 MovieView.propTypes = {
-  movies: PropTypes.shape({
+  movie: PropTypes.shape({
     ImagePath: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
     Genre: PropTypes.shape({
