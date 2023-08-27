@@ -1,5 +1,8 @@
 $primary: #ff0078;
 $body-bg: #252b56;
-$color: #fff;
+$body-color: #fff;
 
 @import "~bootstrap/scss/bootstrap.scss";
+$theme-colors: (
+  "light": $light,
+);

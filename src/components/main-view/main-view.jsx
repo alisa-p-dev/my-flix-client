@@ -28,7 +28,7 @@ export const MainView = () => {
         console.log(data);
         const moviesFromApi = data.map((movie) => {
           return {
-            _id: movie.id,
+            _id: movie._id,
             Title: movie.Title,
             ImagePath: movie.ImagePath,
             Description: movie.Description,
@@ -114,7 +114,7 @@ export const MainView = () => {
                 ) : (
                   <>
                     {movies.map((movie) => (
-                      <Col className="mb-5" key={movie.id} md={4}>
+                      <Col className="mb-5" key={movie._id} md={4}>
                         <MovieCard movie={movie} />
                       </Col>
                     ))}
@@ -125,7 +125,6 @@ export const MainView = () => {
           />
         </Routes>
       </Row>
-      ;
     </BrowserRouter>
   );
 };
