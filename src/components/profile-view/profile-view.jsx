@@ -1,28 +1,29 @@
 import { useEffect, useState } from "react";
 import { Card, Button, Row, Col, Modal, Form } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card.jsx";
+import { apiURL } from "../../config";
 
 export const ProfileView = ({ user, movies, token, updateUsername }) => {
-  const [username, setUsername] = useState(user.username);
+  const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState(user.email);
-  const [birthday, setBirthday] = useState(user.birthday);
+  const [email, setEmail] = useState(user.Email);
+  const [birthday, setBirthday] = useState(user.Birthday);
   const [show, setShow] = useState(false);
   const [deregister, setDeregister] = useState(false);
   const favourite_movies = movies.filter((movie) =>
-    user.favourite_movies.includes(movie.id)
+    user.FavoriteMovies.includes(movie._id)
   );
 
   handleShow = () => setShow(true);
   handleClose = () => setShow(false);
   updateUser = () => {
     const data = {
-      username: username,
-      password: password,
-      email: email,
-      birthday: birthday,
+      Username: username,
+      Password: password,
+      Email: email,
+      Birthday: birthday,
     };
-    fetch("https://my-flix-api-esd8.onrender.com/users/" + user.username, {
+    fetch(`${apiURL}/users/${user.Username}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -32,8 +33,8 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
     })
       .then((response) => response.json())
       .then((res) => {
-        if (res.username) {
-          localStorage.setItem("user", JSON.stringify(res.username));
+        if (res.Username) {
+          localStorage.setItem("user", JSON.stringify(res.Username));
           localStorage.setItem("userObject", JSON.stringify(res));
           updateUsername(res);
           alert("Your account is updated");
@@ -44,7 +45,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
     setShow(false);
   };
   deleteUser = () => {
-    fetch("https://my-flix-api-esd8.onrender.com/users/" + username, {
+    fetch(`${apiURL}/users/${user.Username}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -101,23 +102,16 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
                   className="m-4 float-end"
                   onClick={handleDeregister}
                 >
-                  Deregister your account
+                  Delete your account
                 </Button>
               </Card.Body>
             </Card>
           </Col>
         </Row>
         <Row>
-          <h2 className="text-center mb-5 mt-5">Favourite Movies</h2>
+          <h2 className="text-center fs-4">Favorite Movies</h2>
           {favourite_movies.map((movie) => (
-            <Col
-              className="mb-5 d-flex"
-              key={movie.id}
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-            >
+            <Col className="mb-5 d-flex" key={movie._id}>
               <MovieCard
                 movie={movie}
                 user={user}

@@ -2,13 +2,13 @@ import React from "react";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { apiURL } from "../../config";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
-  const apiURL = "https://my-flix-api-esd8.onrender.com";
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -19,7 +19,7 @@ export const SignupView = () => {
       Email: email,
       Birthday: birthday,
     };
-    fetch(`https://my-flix-api-esd8.onrender.com/users`, {
+    fetch(`${apiURL}/users`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

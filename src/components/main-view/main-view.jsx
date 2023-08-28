@@ -3,18 +3,22 @@ import { MovieCard } from "../movie-card/movie-card.jsx";
 import { MovieView } from "../movie-view/movie-view.jsx";
 import { LoginView } from "../login-view/login-view.jsx";
 import { SignupView } from "../signup-view/signup-view.jsx";
+import { ProfileView } from "../profile-view/profile-view.jsx";
 import { NavigationBar } from "../navigation-bar/navigation-bar.jsx";
 import { Row, Col } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { apiURL } from "../../config";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const storedUserObject = JSON.parse(localStorage.getItem("userObject"));
+  const [userName, setUserName] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-
-  const apiURL = "https://my-flix-api-esd8.onrender.com";
+  const [userObject, setUserObject] = useState(
+    storedUserObject ? storedUserObject : null
+  );
 
   useEffect(() => {
     if (!token) {
@@ -47,9 +51,11 @@ export const MainView = () => {
   return (
     <BrowserRouter>
       <NavigationBar
-        user={user}
+        user={userName}
         onLoggedOut={() => {
-          setUser(null);
+          setUserName(null);
+          setToken(null);
+          localStorage.clear();
         }}
       />
       <Row className="justify-content-md-center font-monospace">
@@ -58,7 +64,7 @@ export const MainView = () => {
             path="/signup"
             element={
               <>
-                {user ? (
+                {userName ? (
                   <Navigate to="/" />
                 ) : (
                   <Col md={5}>
@@ -72,14 +78,15 @@ export const MainView = () => {
             path="/login"
             element={
               <>
-                {user ? (
+                {userName ? (
                   <Navigate to="/" />
                 ) : (
                   <Col md={5}>
                     <LoginView
-                      onLoggedIn={(user, token) => {
-                        setUser(user);
+                      onLoggedIn={(user, token, userObject) => {
+                        setUserName(user);
                         setToken(token);
+                        setUserObject(userObject);
                       }}
                     />
                   </Col>
@@ -91,13 +98,21 @@ export const MainView = () => {
             path="/movies/:movieId"
             element={
               <>
-                {!user ? (
+                {!userName ? (
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
                   <Col>The list is empty!</Col>
                 ) : (
-                  <Col md={8}>
-                    <MovieView movies={movies} />
+                  <Col md={8} className="application">
+                    <MovieView
+                      movies={movies}
+                      user={userObject}
+                      token={token}
+                      setuser={(user) => {
+                        setUser(user.Username);
+                        setUserObject(user);
+                      }}
+                    />
                   </Col>
                 )}
               </>
@@ -107,7 +122,7 @@ export const MainView = () => {
             path="/"
             element={
               <>
-                {!user ? (
+                {!userName ? (
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
                   <Col>This list is empty!</Col>
@@ -115,10 +130,45 @@ export const MainView = () => {
                   <>
                     {movies.map((movie) => (
                       <Col className="mb-5" key={movie._id} md={4}>
-                        <MovieCard movie={movie} />
+                        <MovieCard
+                          movie={movie}
+                          user={userObject}
+                          token={token}
+                          setuser={(user) => {
+                            setUserName(user.username);
+                            setUserObject(user);
+                          }}
+                        />
                       </Col>
                     ))}
                   </>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <>
+                {!userName ? (
+                  <Navigate to="/login" replace />
+                ) : (
+                  <Col>
+                    <ProfileView
+                      user={userObject}
+                      movies={movies}
+                      token={token}
+                      updateUsername={(user) => {
+                        if (user !== null) {
+                          setUserName(user.username);
+                          setUserObject(user);
+                        } else {
+                          setUserName(null);
+                          setUserObject(null);
+                        }
+                      }}
+                    />
+                  </Col>
                 )}
               </>
             }

@@ -2,11 +2,11 @@ import React from "react";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { apiURL } from "../../config";
 
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const apiURL = "https://my-flix-api-esd8.onrender.com";
   const handleSubmit = (event) => {
     event.preventDefault();
 
