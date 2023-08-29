@@ -12,7 +12,7 @@ import { apiURL } from "../../config";
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  const storedUserObject = JSON.parse(localStorage.getItem("userObject"));
+  const storedUserObject = JSON.parse(localStorage.getItem("user"));
   const [userName, setUserName] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
@@ -51,9 +51,9 @@ export const MainView = () => {
   return (
     <BrowserRouter>
       <NavigationBar
-        user={userName}
+        user={userObject ? userObject.Username : null}
         onLoggedOut={() => {
-          setUserName(null);
+          setUserObject(null);
           setToken(null);
           localStorage.clear();
         }}
@@ -109,7 +109,7 @@ export const MainView = () => {
                       user={userObject}
                       token={token}
                       setuser={(user) => {
-                        setUser(user.Username);
+                        setUserName(user.Username);
                         setUserObject(user);
                       }}
                     />
@@ -135,7 +135,7 @@ export const MainView = () => {
                           user={userObject}
                           token={token}
                           setuser={(user) => {
-                            setUserName(user.username);
+                            setUserName(user.Username);
                             setUserObject(user);
                           }}
                         />
@@ -160,7 +160,7 @@ export const MainView = () => {
                       token={token}
                       updateUsername={(user) => {
                         if (user !== null) {
-                          setUserName(user.username);
+                          setUserName(user.Username);
                           setUserObject(user);
                         } else {
                           setUserName(null);

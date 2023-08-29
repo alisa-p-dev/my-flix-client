@@ -4,6 +4,7 @@ import { MovieCard } from "../movie-card/movie-card.jsx";
 import { apiURL } from "../../config";
 
 export const ProfileView = ({ user, movies, token, updateUsername }) => {
+  console.log(user);
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
@@ -14,9 +15,9 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
     user.FavoriteMovies.includes(movie._id)
   );
 
-  handleShow = () => setShow(true);
-  handleClose = () => setShow(false);
-  updateUser = () => {
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const updateUser = () => {
     const data = {
       Username: username,
       Password: password,
@@ -35,7 +36,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
       .then((res) => {
         if (res.Username) {
           localStorage.setItem("user", JSON.stringify(res.Username));
-          localStorage.setItem("userObject", JSON.stringify(res));
+          // localStorage.setItem("user", JSON.stringify(res));
           updateUsername(res);
           alert("Your account is updated");
         } else {
@@ -44,7 +45,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
       });
     setShow(false);
   };
-  deleteUser = () => {
+  const deleteUser = () => {
     fetch(`${apiURL}/users/${user.Username}`, {
       method: "DELETE",
       headers: {
@@ -65,8 +66,8 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
         window.location.reload();
       });
   };
-  handleDeregister = () => setDeregister(true);
-  handleCloseDeregister = () => setDeregister(false);
+  const handleDeregister = () => setDeregister(true);
+  const handleCloseDeregister = () => setDeregister(false);
 
   if (username !== null) {
     return (
@@ -110,16 +111,37 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
         </Row>
         <Row>
           <h2 className="text-center fs-4">Favorite Movies</h2>
-          {favourite_movies.map((movie) => (
+          {/* {user.FavoriteMovies.map((movie) => (
             <Col className="mb-5 d-flex" key={movie._id}>
               <MovieCard
                 movie={movie}
                 user={user}
                 token={token}
-                setuser={(user) => updateUsername(user)}
+                setuser={(user) => {
+                  setUserName(user.Username);
+                  setUserObject(user);
+                }}
               />
             </Col>
-          ))}
+          ))} */}
+          {favourite_movies.map((movie) => {
+            const movieData = movies.find((m) => m._id === movie);
+            if (movieData) {
+              return (
+                <Col className="mb-5 d-flex" key={movieData._id}>
+                  <MovieCard
+                    movie={movieData}
+                    user={user}
+                    token={token}
+                    setuser={(user) => {
+                      setUserName(user.Username);
+                      setUserObject(user);
+                    }}
+                  />
+                </Col>
+              );
+            }
+          })}
         </Row>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
