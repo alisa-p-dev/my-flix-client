@@ -69,6 +69,10 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
   const handleDeregister = () => setDeregister(true);
   const handleCloseDeregister = () => setDeregister(false);
 
+  const myFavoriteMovies = movies.filter((movie) =>
+    user.FavoriteMovies.includes(movie._id)
+  );
+
   if (username !== null) {
     return (
       <>
@@ -124,8 +128,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
               />
             </Col>
           ))} */}
-          {favourite_movies.map((movie) => {
-            const movieData = movies.find((m) => m._id === movie);
+          {myFavoriteMovies.map((movieData) => {
             if (movieData) {
               return (
                 <Col className="mb-5 d-flex" key={movieData._id}>

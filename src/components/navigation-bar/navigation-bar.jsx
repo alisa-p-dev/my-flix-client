@@ -6,7 +6,7 @@ import logoImage from "../../img/logo.jpg";
 export const NavigationBar = ({ user, onLoggedOut }) => {
   return (
     <Navbar
-      className="navbar p-0 bg-body-tertiary font-monospace mx-0"
+      className="navbar p-0 font-monospace mx-0"
       data-bs-theme="dark"
       expand="lg"
     >
