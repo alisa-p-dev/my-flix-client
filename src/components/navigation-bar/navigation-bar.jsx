@@ -1,13 +1,18 @@
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./navigation-bar.scss";
+import logoImage from "../../img/logo.jpg";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
   return (
-    <Navbar className="navbar" bg="dark" data-bs-theme="dark" expand="lg">
+    <Navbar
+      className="navbar p-0 bg-body-tertiary font-monospace mx-0"
+      data-bs-theme="dark"
+      expand="lg"
+    >
       <Container>
         <Navbar.Brand as={Link} to="/">
-          MyFlix
+          <Image src={logoImage} alt="Logo" className="logo-image" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

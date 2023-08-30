@@ -8,6 +8,7 @@ import { NavigationBar } from "../navigation-bar/navigation-bar.jsx";
 import { Row, Col } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { apiURL } from "../../config";
+import "./main-view.scss";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -58,7 +59,7 @@ export const MainView = () => {
           localStorage.clear();
         }}
       />
-      <Row className="justify-content-md-center font-monospace">
+      <Row className="justify-content-md-center font-monospace ">
         <Routes>
           <Route
             path="/signup"
@@ -129,7 +130,7 @@ export const MainView = () => {
                 ) : (
                   <>
                     {movies.map((movie) => (
-                      <Col className="mb-5" key={movie._id} md={4}>
+                      <Col className="mb-5" key={movie._id} md={3}>
                         <MovieCard
                           movie={movie}
                           user={userObject}

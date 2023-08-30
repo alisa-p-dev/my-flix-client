@@ -36,7 +36,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
       .then((res) => {
         if (res.Username) {
           localStorage.setItem("user", JSON.stringify(res.Username));
-          // localStorage.setItem("user", JSON.stringify(res));
+          localStorage.setItem("user", JSON.stringify(res));
           updateUsername(res);
           alert("Your account is updated");
         } else {
@@ -73,10 +73,10 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
     return (
       <>
         <Row>
-          <Col md={6} className="mx-auto">
-            <Card border="primary" className="movieCard">
+          <Col md={8} className="mx-auto">
+            <Card className="movieCard mt-2" border="primary">
               <Card.Body>
-                <Card.Title className="text-center fs-4">
+                <Card.Title className="text-center fs-2 pb-3">
                   Profile
                   <br />
                 </Card.Title>
@@ -92,7 +92,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
                 <Button
                   variant="primary"
                   data-inline="true"
-                  className="m-4 float-end"
+                  className="m-2 float-center"
                   onClick={handleShow}
                 >
                   Update profile
@@ -100,7 +100,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
                 <Button
                   variant="primary"
                   data-inline="true"
-                  className="m-4 float-end"
+                  className="m-2 float-center"
                   onClick={handleDeregister}
                 >
                   Delete your account
@@ -110,7 +110,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
           </Col>
         </Row>
         <Row>
-          <h2 className="text-center fs-4">Favorite Movies</h2>
+          <h2 className="text-center fs-4 pt-4">Favorite Movies</h2>
           {/* {user.FavoriteMovies.map((movie) => (
             <Col className="mb-5 d-flex" key={movie._id}>
               <MovieCard

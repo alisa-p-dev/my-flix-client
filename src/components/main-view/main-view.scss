@@ -1,0 +1,17 @@
+.application {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.application-title {
+  display: flex;
+  align-items: center;
+}
+.application-detail {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.logout-button {
+  cursor: pointer;
+}

@@ -3,6 +3,7 @@ import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { apiURL } from "../../config";
+import "./movie-card.scss";
 
 export const MovieCard = ({ movie, user, token, setuser }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -81,8 +82,8 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
   };
 
   return (
-    <Card className="h-100 border-0">
-      <Card.Img variant="top" src={movie.ImagePath} />
+    <Card className="movieCard border-0">
+      <Card.Img className="card-image" variant="top" src={movie.ImagePath} />
       <Card.Body>
         <Card.Title>{movie.Title}</Card.Title>
         <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
