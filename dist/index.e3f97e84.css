@@ -13187,6 +13187,20 @@ textarea.form-control-lg {
   box-shadow: 0 .5rem 1rem #00000026;
 }
 
+.btn {
+  color: green;
+  background-color: #252b56;
+  border: none;
+  border-radius: 20px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.btn:hover {
+  color: #252b56;
+  background-color: #fff;
+}
+
 :root, [data-bs-theme="light"] {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -26378,25 +26392,7 @@ textarea.form-control-lg {
   margin: 0 10px;
 }
 
-.application {
-  flex-direction: column;
-  height: 100%;
-  display: flex;
-}
 
-.application-title {
-  align-items: center;
-  display: flex;
-}
-
-.application-detail {
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.logout-button {
-  cursor: pointer;
-}
 
 :root, [data-bs-theme="light"] {
   --bs-blue: #0d6efd;

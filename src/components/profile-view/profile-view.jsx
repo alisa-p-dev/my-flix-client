@@ -24,6 +24,10 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
       Email: email,
       Birthday: birthday,
     };
+
+    const date = new user.Birthday();
+    const formattedDate = date.toLocaleDateString();
+
     fetch(`${apiURL}/users/${user.Username}`, {
       method: "PUT",
       headers: {
@@ -89,7 +93,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
                   <br />
                   Email: {email}
                   <br />
-                  Birthday: {birthday}
+                  Birthday: {birthday ? birthday.slice(0, 10) : null}
                   <br />
                 </Card.Text>
 

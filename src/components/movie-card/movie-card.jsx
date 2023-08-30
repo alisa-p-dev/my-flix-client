@@ -85,22 +85,38 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
     <Card className="movieCard border-0">
       <Card.Img className="card-image" variant="top" src={movie.ImagePath} />
       <Card.Body>
-        <Card.Title>{movie.Title}</Card.Title>
-        <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
-          <Button variant="link">Open</Button>
-        </Link>
+        <Card.Title className="text-center fs-6 ">{movie.Title}</Card.Title>
+        <div className="text-center d-flex justify-content-center">
+          <div className="mb-2">
+            <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
+              <Button variant="primary" className="btn text-nowrap" size="sm">
+                Open
+              </Button>
+            </Link>
+          </div>
+          <div className="ml-auto">
+            {!isFavorite ? (
+              <Button
+                className="btn"
+                variant="primary"
+                size="sm"
+                onClick={addToFavorite}
+              >
+                Add to Favorites
+              </Button>
+            ) : (
+              <Button
+                className="btn"
+                variant="primary"
+                size="sm"
+                onClick={removeFromFavorite}
+              >
+                Remove from Favorites
+              </Button>
+            )}
+          </div>{" "}
+        </div>
       </Card.Body>
-      <Card.Footer className="text-center ">
-        {!isFavorite ? (
-          <Button variant="primary" onClick={addToFavorite}>
-            Add to Favorites
-          </Button>
-        ) : (
-          <Button variant="primary" onClick={removeFromFavorite}>
-            Remove from Favorites
-          </Button>
-        )}
-      </Card.Footer>
     </Card>
   );
 };
