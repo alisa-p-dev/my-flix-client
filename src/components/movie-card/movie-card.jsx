@@ -15,7 +15,7 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
     }
   }, []);
 
-  addToFavorite = () => {
+  const addToFavorite = () => {
     fetch(`${apiURL}/users/${user.Username}/movies/${movie._id}`, {
       method: "POST",
       headers: {
@@ -47,7 +47,7 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
       });
   };
 
-  removeFromFavorite = () => {
+  const removeFromFavorite = () => {
     fetch(`${apiURL}/users/${user.Username}/movies/${movie._id}`, {
       method: "DELETE",
       headers: {

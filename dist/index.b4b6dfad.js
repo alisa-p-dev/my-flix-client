@@ -27422,7 +27422,7 @@ const MovieCard = ({ movie, user, token, setuser })=>{
         console.log(user);
         if (user.FavoriteMovies && user.FavoriteMovies.includes(movie._id)) setIsFavorite(true);
     }, []);
-    addToFavorite = ()=>{
+    const addToFavorite = ()=>{
         fetch(`${(0, _config.apiURL)}/users/${user.Username}/movies/${movie._id}`, {
             method: "POST",
             headers: {
@@ -27448,7 +27448,7 @@ const MovieCard = ({ movie, user, token, setuser })=>{
         // Handle the error
         });
     };
-    removeFromFavorite = ()=>{
+    const removeFromFavorite = ()=>{
         fetch(`${(0, _config.apiURL)}/users/${user.Username}/movies/${movie._id}`, {
             method: "DELETE",
             headers: {
