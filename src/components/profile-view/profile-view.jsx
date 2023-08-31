@@ -135,7 +135,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
           {myFavoriteMovies.map((movieData) => {
             if (movieData) {
               return (
-                <Col className="mb-5 d-flex" key={movieData._id}>
+                <Col className="mb-2 d-flex" key={movieData._id}>
                   <MovieCard
                     movie={movieData}
                     user={user}

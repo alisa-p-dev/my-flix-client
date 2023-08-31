@@ -8,12 +8,12 @@ import "./movie-card.scss";
 export const MovieCard = ({ movie, user, token, setuser }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // useEffect(() => {
-  //   console.log(user);
-  //   if (user.FavoriteMovies && user.FavoriteMovies.includes(movie._id)) {
-  //     setIsFavorite(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    console.log(user);
+    if (user.FavoriteMovies && user.FavoriteMovies.includes(movie._id)) {
+      setIsFavorite(true);
+    }
+  }, []);
 
   addToFavorite = () => {
     fetch(`${apiURL}/users/${user.Username}/movies/${movie._id}`, {
