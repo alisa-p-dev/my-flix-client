@@ -1,0 +1,19 @@
+@import "~bootstrap/scss/bootstrap.scss";
+.navbar {
+  background-color: #252b56;
+  color: #ffffff;
+  .navbar-brand {
+    color: #ffffff;
+  }
+  .nav-link {
+    color: #ffffff;
+  }
+  .nav-link:hover {
+    color: #ffffff;
+  }
+}
+.logo-image {
+  max-height: 60px;
+  width: auto;
+  margin: 0 10px;
+}

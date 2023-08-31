@@ -1,10 +1,12 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { apiURL } from "../../config";
 
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const apiURL = "https://my-flix-api-esd8.onrender.com";
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -36,27 +38,30 @@ export const LoginView = ({ onLoggedIn }) => {
       });
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="formUsername">
+        <Form.Label>Username:</Form.Label>
+        <Form.Control
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          minLength={5}
+          minLength="3"
         />
-      </label>
-      <label>
-        Password:
-        <input
+      </Form.Group>
+
+      <Form.Group controlId="formPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </label>
-      <button type="submit">Login</button>
-    </form>
+      </Form.Group>
+      <Button className="mt-3" variant="primary" type="submit">
+        Login
+      </Button>
+    </Form>
   );
 };

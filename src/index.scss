@@ -1,5 +1,9 @@
-$color: steelblue;
+$primary: #ff0078;
+$body-bg: #181c42;
+$body-color: #fff;
 
-.my-flix {
-  color: $color;
-}
+@import "~bootstrap/scss/bootstrap.scss";
+$theme-colors: (
+  "light": $light,
+);
+$btn-white-space: nowrap;
