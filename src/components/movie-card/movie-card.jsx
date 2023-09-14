@@ -9,6 +9,7 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [userObject, setUserObject] = useState(user);
 
   useEffect(() => {
     console.log(user);
@@ -33,6 +34,7 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
       })
       .then((res) => {
         const updatedUser = { ...user };
+        updatedUser.FavoriteMovies.push(movie._id);
 
         setIsFavorite(true);
         setuser(updatedUser);
@@ -69,6 +71,7 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
 
         setIsFavorite(false);
         setuser(updatedUser);
+        setUserObject(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
 
         setAlertMessage("Removed from favorites");

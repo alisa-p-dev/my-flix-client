@@ -38,7 +38,7 @@ export const MovieView = ({ movies, user, token, setuser }) => {
       .then((res) => {
         setIsFavorite(true);
         setuser(res);
-        localStorage.setItem("userObject", JSON.stringify(res));
+        localStorage.setItem("user", JSON.stringify(res));
 
         setAlertMessage("Added to favorites");
         setShowAlert(true);
@@ -62,7 +62,7 @@ export const MovieView = ({ movies, user, token, setuser }) => {
       .then((res) => {
         setIsFavorite(false);
         setuser(res);
-        localStorage.setItem("userObject", JSON.stringify(res));
+        localStorage.setItem("user", JSON.stringify(res));
 
         setAlertMessage("Removed from favorites");
         setShowAlert(true);

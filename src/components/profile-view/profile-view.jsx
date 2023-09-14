@@ -11,9 +11,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
   const [birthday, setBirthday] = useState(user.Birthday);
   const [show, setShow] = useState(false);
   const [deregister, setDeregister] = useState(false);
-  const favourite_movies = movies.filter((movie) =>
-    user.FavoriteMovies.includes(movie._id)
-  );
+  const [userObject, setUserObject] = useState(user);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -22,7 +20,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
       Username: username,
       Password: password,
       Email: email,
-      Birthday: birthday, // Updated the Birthday property
+      Birthday: birthday,
     };
 
     fetch(`${apiURL}/users/${user.Username}`, {
@@ -116,19 +114,6 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
         </Row>
         <Row>
           <h2 className="text-center fs-4 pt-4">Favorite Movies</h2>
-          {/* {user.FavoriteMovies.map((movie) => (
-            <Col className="mb-5 d-flex" key={movie._id}>
-              <MovieCard
-                movie={movie}
-                user={user}
-                token={token}
-                setuser={(user) => {
-                  setUserName(user.Username);
-                  setUserObject(user);
-                }}
-              />
-            </Col>
-          ))} */}
           {myFavoriteMovies.map((movieData) => {
             if (movieData) {
               return (
@@ -138,8 +123,8 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
                     user={user}
                     token={token}
                     setuser={(user) => {
-                      setUserName(user.Username);
-                      setUserObject(user);
+                      setUsername(user.Username);
+                      setUserObject(userObject);
                     }}
                   />
                 </Col>
