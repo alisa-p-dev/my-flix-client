@@ -60,8 +60,8 @@ export const MainView = () => {
           window.location.reload();
         }}
       />
-      <Container>
-        <Row className="justify-content-md-center font-monospace ">
+      <Container className="center-vertically">
+        <Row className="font-monospace ">
           <Routes>
             <Route
               path="/signup"
@@ -70,7 +70,7 @@ export const MainView = () => {
                   {userName ? (
                     <Navigate to="/" />
                   ) : (
-                    <Col md={5}>
+                    <Col md={12}>
                       <SignupView />
                     </Col>
                   )}
@@ -84,7 +84,7 @@ export const MainView = () => {
                   {userName ? (
                     <Navigate to="/" />
                   ) : (
-                    <Col md={5}>
+                    <Col md={12}>
                       <LoginView
                         onLoggedIn={(user, token, userObject) => {
                           setUserName(user);

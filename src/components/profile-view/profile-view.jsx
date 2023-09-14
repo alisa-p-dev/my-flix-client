@@ -22,11 +22,8 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
       Username: username,
       Password: password,
       Email: email,
-      Birthday: birthday,
+      Birthday: birthday, // Updated the Birthday property
     };
-
-    const date = new user.Birthday();
-    const formattedDate = date.toLocaleDateString();
 
     fetch(`${apiURL}/users/${user.Username}`, {
       method: "PUT",
