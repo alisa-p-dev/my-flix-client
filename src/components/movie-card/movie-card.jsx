@@ -1,3 +1,5 @@
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react/prop-types */
 import PropTypes from "prop-types";
 import { Button, Card, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -9,10 +11,9 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [userObject, setUserObject] = useState(user);
 
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     if (user.FavoriteMovies && user.FavoriteMovies.includes(movie._id)) {
       setIsFavorite(true);
     }
@@ -33,13 +34,12 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
         return response.json();
       })
       .then((res) => {
-        const updatedUser = { ...user };
-        updatedUser.FavoriteMovies.push(movie._id);
+        const updatedUser = { ...res };
 
         setIsFavorite(true);
         setuser(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
-
+        window.location.reload();
         setAlertMessage("Added to favorites");
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 3000);
@@ -48,7 +48,6 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
         console.error("Error adding movie to favorites:", error);
       });
   };
-
   const removeFromFavorite = () => {
     fetch(`${apiURL}/users/${user.Username}/movies/${movie._id}`, {
       method: "DELETE",
@@ -64,16 +63,13 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
         return response.json();
       })
       .then((res) => {
-        const updatedUser = { ...user };
-        updatedUser.FavoriteMovies = updatedUser.FavoriteMovies.filter(
-          (favMovieId) => favMovieId !== movie._id
-        );
+        console.log(res);
+        const updatedUser = { ...res };
 
         setIsFavorite(false);
         setuser(updatedUser);
-        setUserObject(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
-
+        window.location.reload();
         setAlertMessage("Removed from favorites");
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 3000);
