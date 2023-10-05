@@ -4,7 +4,7 @@ import { MovieCard } from "../movie-card/movie-card.jsx";
 import { apiURL } from "../../config";
 
 export const ProfileView = ({ user, movies, token, updateUsername }) => {
-  //  console.log(user);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
@@ -62,7 +62,7 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
         alert("Your account is deleted successfully!");
         updateUsername(null);
         localStorage.clear();
-        window.location.reload();
+        setLoggedIn(false); // Set this to false instead of window reload
       });
   };
   const handleDeregister = () => setDeregister(true);
