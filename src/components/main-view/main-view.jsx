@@ -11,6 +11,7 @@ import { apiURL } from "../../config";
 import "./main-view.scss";
 
 export const MainView = () => {
+  const [refreshFlag, setRefreshFlag] = useState(false);
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
   const storedUserObject = JSON.parse(localStorage.getItem("user"));
@@ -47,7 +48,7 @@ export const MainView = () => {
         });
         setMovies(moviesFromApi);
       });
-  }, [token]);
+  }, [token, refreshFlag]);
 
   return (
     <BrowserRouter>
@@ -57,7 +58,7 @@ export const MainView = () => {
           setUserObject(null);
           setToken(null);
           localStorage.clear();
-          window.location.reload();
+          setRefreshFlag((prev) => !prev); // <-- replace window.location.reload()
         }}
       />
       <Container className="center-vertically">
@@ -90,7 +91,7 @@ export const MainView = () => {
                           setUserName(user);
                           setToken(token);
                           setUserObject(userObject);
-                          window.location.reload();
+                          setRefreshFlag((prev) => !prev); // <-- replace window.location.reload()
                         }}
                       />
                     </Col>
