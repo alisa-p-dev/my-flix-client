@@ -13,11 +13,12 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
   const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
-    // console.log(user);
     if (user.FavoriteMovies && user.FavoriteMovies.includes(movie._id)) {
       setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
     }
-  }, []);
+  }, [user]);
 
   const addToFavorite = () => {
     fetch(`${apiURL}/users/${user.Username}/movies/${movie._id}`, {
@@ -39,7 +40,6 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
         setIsFavorite(true);
         setuser(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
-        window.location.reload();
         setAlertMessage("Added to favorites");
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 3000);
@@ -69,7 +69,6 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
         setIsFavorite(false);
         setuser(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
-        window.location.reload();
         setAlertMessage("Removed from favorites");
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 3000);
