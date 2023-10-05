@@ -1,39 +1,50 @@
-import React from "react";
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import { apiURL } from "../../config";
+import React from 'react';
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { apiURL } from '../../config';
+import PropTypes from 'prop-types';
 
-export const LoginView = ({ onLoggedIn }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+export const LoginView = ({
+ setUserName,
+  setToken,
+  setUserObject,
+  setRefreshFlag,
+ }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const data = {
       Username: username,
-      Password: password,
+      Password: password
     };
 
     fetch(`${apiURL}/login/?Username=${username}&Password=${password}`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.user) {
-          localStorage.setItem("user", JSON.stringify(data.user));
-          localStorage.setItem("token", data.token);
-          onLoggedIn(data.user, data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('userObject', JSON.stringify(data.user));
+          setUserName(data.user);
+          setToken(data.token);
+          setUserObject(data.user);
+          setRefreshFlag((prev) => !prev); // <-- replace window.location.reload()
         } else {
-          alert("No such user");
+          alert('No such user');
         }
       })
-      .catch((e) => {
-        alert("Something went wrong");
+      .catch((error) => {
+        alert('Something went wrong');
+        console.error(error);
       });
   };
   return (
@@ -63,4 +74,11 @@ export const LoginView = ({ onLoggedIn }) => {
       </Button>
     </Form>
   );
+};
+
+LoginView.propTypes = {
+  setUserName: PropTypes.func.isRequired,
+  setToken: PropTypes.func.isRequired,
+  setUserObject: PropTypes.func.isRequired,
+  setRefreshFlag: PropTypes.func.isRequired
 };

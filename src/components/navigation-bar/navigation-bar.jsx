@@ -1,10 +1,11 @@
-import React from "react";
-import { Navbar, Container, Nav, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import "./navigation-bar.scss"; // Make sure you have the correct path to your SCSS file
-import logoImage from "../../img/logo.jpg";
+import React from 'react';
+import { Navbar, Container, Nav, Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import './navigation-bar.scss'; // Make sure you have the correct path to your SCSS file
+import logoImage from '../../img/logo.jpg';
+import PropTypes from 'prop-types';
 
-export const NavigationBar = ({ user, onLoggedOut }) => {
+export const NavigationBar = ({ userName, onLoggedOut }) => {
   return (
     <Navbar
       className="navbar p-0 font-monospace mx-1"
@@ -20,7 +21,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
         </div>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            {!user && (
+            {!userName && (
               <>
                 <Nav.Link as={Link} to="/login">
                   Login
@@ -30,7 +31,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 </Nav.Link>
               </>
             )}
-            {user && (
+            {userName && (
               <>
                 <Nav.Link as={Link} to="/">
                   Home
@@ -44,4 +45,9 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
       </Container>
     </Navbar>
   );
+};
+
+NavigationBar.propTypes = {
+  userName: PropTypes.string,
+  onLoggedOut: PropTypes.func.isRequired
 };
