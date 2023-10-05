@@ -1,17 +1,22 @@
-import PropTypes from "prop-types";
-import { Button, Card, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import { apiURL } from "../../config";
-import "./movie-card.scss";
+import PropTypes from 'prop-types';
+import { Button, Card, Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { apiURL } from '../../config';
+import './movie-card.scss';
 
-export const MovieCard = ({ movie, user, token, setUser }) => {
+export const MovieCard = ({ movie, token, setUser }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage, setAlertMessage] = useState('');
+  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    if (user && user.FavoriteMovies && user.FavoriteMovies.includes(movie._id)) {
+    if (
+      user &&
+      user.FavoriteMovies &&
+      user.FavoriteMovies.includes(movie._id)
+    ) {
       setIsFavorite(true);
     } else {
       setIsFavorite(false);
@@ -20,15 +25,15 @@ export const MovieCard = ({ movie, user, token, setUser }) => {
 
   const addToFavorite = () => {
     fetch(`${apiURL}/users/${user.Username}/movies/${movie._id}`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to add movie to favorites");
+          throw new Error('Failed to add movie to favorites');
         }
         return response.json();
       })
@@ -37,42 +42,40 @@ export const MovieCard = ({ movie, user, token, setUser }) => {
 
         setIsFavorite(true);
         setUser(updatedUser);
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-        setAlertMessage("Added to favorites");
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setAlertMessage('Added to favorites');
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 3000);
       })
       .catch((error) => {
-        console.error("Error adding movie to favorites:", error);
+        console.error('Error adding movie to favorites:', error);
       });
   };
   const removeFromFavorite = () => {
     fetch(`${apiURL}/users/${user.Username}/movies/${movie._id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to remove movie from favorites");
+          throw new Error('Failed to remove movie from favorites');
         }
         return response.json();
       })
       .then((res) => {
-        console.log(res);
         const updatedUser = { ...res };
-
+        localStorage.setItem('user', JSON.stringify(updatedUser));
         setIsFavorite(false);
         setUser(updatedUser);
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-        setAlertMessage("Removed from favorites");
+        setAlertMessage('Removed from favorites');
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 3000);
       })
       .catch((error) => {
-        console.error("Error removing movie from favorites:", error);
+        console.error('Error removing movie from favorites:', error);
       });
   };
 
@@ -110,7 +113,7 @@ export const MovieCard = ({ movie, user, token, setUser }) => {
                   Remove from Favorites
                 </Button>
               )}
-            </div>{" "}
+            </div>{' '}
           </div>
         </Card.Body>
       </Card>
@@ -132,13 +135,13 @@ MovieCard.propTypes = {
   movie: PropTypes.shape({
     Title: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
-    ImagePath: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired
   }).isRequired,
   user: PropTypes.shape({
     FavoriteMovies: PropTypes.arrayOf(PropTypes.string),
     Username: PropTypes.string,
-    _id: PropTypes.string,
+    _id: PropTypes.string
   }),
   token: PropTypes.string.isRequired,
-  setUser: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired
 };
