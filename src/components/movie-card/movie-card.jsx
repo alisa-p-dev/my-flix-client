@@ -1,19 +1,17 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable react/prop-types */
 import PropTypes from "prop-types";
 import { Button, Card, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { apiURL } from "../../config";
 import "./movie-card.scss";
 
-export const MovieCard = ({ movie, user, token, setuser }) => {
+export const MovieCard = ({ movie, user, token, setUser }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
-    if (user.FavoriteMovies && user.FavoriteMovies.includes(movie._id)) {
+    if (user && user.FavoriteMovies && user.FavoriteMovies.includes(movie._id)) {
       setIsFavorite(true);
     } else {
       setIsFavorite(false);
@@ -38,7 +36,7 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
         const updatedUser = { ...res };
 
         setIsFavorite(true);
-        setuser(updatedUser);
+        setUser(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
         setAlertMessage("Added to favorites");
         setShowAlert(true);
@@ -67,7 +65,7 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
         const updatedUser = { ...res };
 
         setIsFavorite(false);
-        setuser(updatedUser);
+        setUser(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
         setAlertMessage("Removed from favorites");
         setShowAlert(true);
@@ -133,5 +131,14 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
 MovieCard.propTypes = {
   movie: PropTypes.shape({
     Title: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
   }).isRequired,
+  user: PropTypes.shape({
+    FavoriteMovies: PropTypes.arrayOf(PropTypes.string),
+    Username: PropTypes.string,
+    _id: PropTypes.string,
+  }),
+  token: PropTypes.string.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
