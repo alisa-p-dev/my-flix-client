@@ -44,11 +44,6 @@ export const MainView = () => {
       });
   }, [token, refreshFlag]);
 
-  console.log('MainView-movies', movies);
-  console.log('MainView-user', userObject);
-  console.log('MainView-token', token);
-  console.log('MainView-username', userName);
-
   return (
     <BrowserRouter>
       <NavigationBar
