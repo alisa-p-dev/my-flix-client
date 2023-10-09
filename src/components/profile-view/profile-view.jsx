@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Button, Row, Col, Modal, Form } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card.jsx";
 import { apiURL } from "../../config";
+import PropTypes from "prop-types";
 
-export const ProfileView = ({ user, movies, token, updateUsername }) => {
-  //  console.log(user);
+export const ProfileView = ({ movies, token, updateUsername }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [refreshFlag, setRefreshFlag] = useState(false);
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
@@ -12,6 +14,9 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
   const [show, setShow] = useState(false);
   const [deregister, setDeregister] = useState(false);
   const [userObject, setUserObject] = useState(user);
+
+  useEffect(() => {
+  }, [user, refreshFlag]);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -62,7 +67,6 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
         alert("Your account is deleted successfully!");
         updateUsername(null);
         localStorage.clear();
-        window.location.reload();
       });
   };
   const handleDeregister = () => setDeregister(true);
@@ -122,9 +126,10 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
                     movie={movieData}
                     user={user}
                     token={token}
-                    setuser={(user) => {
+                    setUser={(user) => {
                       setUsername(user.Username);
                       setUserObject(userObject);
+                      setRefreshFlag(!refreshFlag);
                     }}
                   />
                 </Col>
@@ -210,4 +215,17 @@ export const ProfileView = ({ user, movies, token, updateUsername }) => {
       </>
     );
   }
+};
+
+ProfileView.propTypes = {
+  user: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
+    FavoriteMovies: PropTypes.array.isRequired,
+  }),
+  movies: PropTypes.array.isRequired,
+  token: PropTypes.string.isRequired,
+  updateUsername: PropTypes.func.isRequired,
 };

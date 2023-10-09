@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Button, Card, Col, Row, Alert } from "react-bootstrap";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { apiURL } from "../../config";

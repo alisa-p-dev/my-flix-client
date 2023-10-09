@@ -1,35 +1,39 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable react/prop-types */
-import PropTypes from "prop-types";
-import { Button, Card, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { apiURL } from "../../config";
-import "./movie-card.scss";
+import PropTypes from 'prop-types';
+import { Button, Card, Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { apiURL } from '../../config';
+import './movie-card.scss';
 
-export const MovieCard = ({ movie, user, token, setuser }) => {
+export const MovieCard = ({ movie, token, setUser }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage, setAlertMessage] = useState('');
+  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    // console.log(user);
-    if (user.FavoriteMovies && user.FavoriteMovies.includes(movie._id)) {
+    if (
+      user &&
+      user.FavoriteMovies &&
+      user.FavoriteMovies.includes(movie._id)
+    ) {
       setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
     }
-  }, []);
+  }, [user]);
 
   const addToFavorite = () => {
     fetch(`${apiURL}/users/${user.Username}/movies/${movie._id}`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to add movie to favorites");
+          throw new Error('Failed to add movie to favorites');
         }
         return response.json();
       })
@@ -37,45 +41,41 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
         const updatedUser = { ...res };
 
         setIsFavorite(true);
-        setuser(updatedUser);
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-        window.location.reload();
-        setAlertMessage("Added to favorites");
+        setUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setAlertMessage('Added to favorites');
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 3000);
       })
       .catch((error) => {
-        console.error("Error adding movie to favorites:", error);
+        console.error('Error adding movie to favorites:', error);
       });
   };
   const removeFromFavorite = () => {
     fetch(`${apiURL}/users/${user.Username}/movies/${movie._id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to remove movie from favorites");
+          throw new Error('Failed to remove movie from favorites');
         }
         return response.json();
       })
       .then((res) => {
-        console.log(res);
         const updatedUser = { ...res };
-
+        localStorage.setItem('user', JSON.stringify(updatedUser));
         setIsFavorite(false);
-        setuser(updatedUser);
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-        window.location.reload();
-        setAlertMessage("Removed from favorites");
+        setUser(updatedUser);
+        setAlertMessage('Removed from favorites');
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 3000);
       })
       .catch((error) => {
-        console.error("Error removing movie from favorites:", error);
+        console.error('Error removing movie from favorites:', error);
       });
   };
 
@@ -113,7 +113,7 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
                   Remove from Favorites
                 </Button>
               )}
-            </div>{" "}
+            </div>{' '}
           </div>
         </Card.Body>
       </Card>
@@ -134,5 +134,14 @@ export const MovieCard = ({ movie, user, token, setuser }) => {
 MovieCard.propTypes = {
   movie: PropTypes.shape({
     Title: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired
   }).isRequired,
+  user: PropTypes.shape({
+    FavoriteMovies: PropTypes.arrayOf(PropTypes.string),
+    Username: PropTypes.string,
+    _id: PropTypes.string
+  }),
+  token: PropTypes.string.isRequired,
+  setUser: PropTypes.func.isRequired
 };
